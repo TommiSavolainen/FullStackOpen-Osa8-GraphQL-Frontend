@@ -3,9 +3,12 @@ const Books = ({show, allBooks}) => {
   if (!show) {
     return null
   }
-
+  if (!allBooks) {
+    return null
+  }
+  
   const books = allBooks
-
+  console.log('books:', books)
   return (
     <div>
       <h2>books</h2>
