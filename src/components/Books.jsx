@@ -2,8 +2,8 @@
 import { useQuery } from "@apollo/client"
 import { useState } from "react"
 import { ALL_BOOKS_WITH_GENRE } from "../queries"
-const Books = ({show}) => {
-  const [genre, setGenre] = useState('')
+const Books = ({show, selectedGenre}) => {
+  const [genre, setGenre] = useState(selectedGenre || '')
   const result = useQuery(ALL_BOOKS_WITH_GENRE, {
     variables: { genre }
   })
@@ -40,13 +40,6 @@ const Books = ({show}) => {
               <td>{a.published}</td>
             </tr>
           ))}
-          {/* {books.map((a) => (
-            <tr key={a.title}>
-              <td>{a.title}</td>
-              <td>{a.author.name}</td>
-              <td>{a.published}</td>
-            </tr>
-          ))} */}
         </tbody>
       </table>
       {genres.map((a) => (

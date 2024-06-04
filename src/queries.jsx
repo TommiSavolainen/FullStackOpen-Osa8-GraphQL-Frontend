@@ -20,3 +20,10 @@ export const ALL_BOOKS_WITH_GENRE = gql`
         }
     }
     `;
+export const ME = gql`
+    query {
+        me {
+        favoriteGenre
+        }
+    }
+    `;

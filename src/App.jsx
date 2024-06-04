@@ -3,6 +3,7 @@ import Authors from "./components/Authors";
 import Books from "./components/Books";
 import NewBook from "./components/NewBook";
 import LoginForm from "./components/LoginForm";
+import Recommend from "./components/Recommend";
 import { gql, useQuery, useApolloClient } from "@apollo/client";
 
 
@@ -71,13 +72,14 @@ const App = () => {
         <button onClick={() => setPage("authors")}>authors</button>
         <button onClick={() => setPage("books")}>books</button>
         <button onClick={() => setPage("add")}>add book</button>
+        <button onClick={() => setPage("recommend")}>recommend</button>
         <button onClick={logout}>logout</button>
       </div>
 
       <Authors show={page === "authors"} allAuthors={authorsResult.data?.allAuthors} />
 
-      <Books show={page === "books"} allBooks={booksResult.data?.allBooks}/>
-
+      <Books show={page === "books"} selectedGenre={''} allBooks={booksResult.data?.allBooks}/>
+      <Recommend show={page === "recommend"} />
       <NewBook show={page === "add"} />
 
     </div>
