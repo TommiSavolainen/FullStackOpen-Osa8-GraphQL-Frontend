@@ -1,6 +1,9 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { gql, useMutation, useQuery, ApolloError } from '@apollo/client'
+import { CREATE_AUTHOR } from '../queries'
+
 
 const CREATE_BOOK = gql`
   mutation createBook($title: String!, $author: String!, $published: Int!, $genres: [String!]!) {
@@ -54,7 +57,8 @@ const NewBook = (props) => {
   const [createBook] = useMutation(CREATE_BOOK, {
     refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }]
   })
-
+  const [createAuthor] = useMutation(CREATE_AUTHOR)
+  const { data } = useQuery(ALL_AUTHORS)
   if (!props.show) {
     return null
   }
@@ -63,6 +67,20 @@ const NewBook = (props) => {
     event.preventDefault()
 
     console.log('add book...')
+    console.log(data.allAuthors)
+    if (data && data.allAuthors && !data.allAuthors.find((a) => a.name === author)) {
+      console.log('author: ',author)
+      console.log('add author...')
+      try {
+        await createAuthor({ variables: { name: author } })
+      } catch (error) {
+        if (error instanceof ApolloError) {
+          console.error('GraphQL operation failed:', error.message);
+        } else {
+          console.error('Error creating author:', error);
+        }
+      }
+    }
     await createBook({ variables: { title, author, published: parseInt(published), genres } })
     setTitle('')
     setPublished('')

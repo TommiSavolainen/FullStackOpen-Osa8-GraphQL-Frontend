@@ -52,7 +52,7 @@ const App = () => {
     localStorage.clear();
     client.resetStore();
   }
-  console.log('token:', token)
+
   if (!token) {
     return (
       <div>
@@ -60,7 +60,7 @@ const App = () => {
         <button onClick={() => setPage("books")}>books</button>
         <button onClick={() => setPage("login")}>login</button>
         <Authors show={page === "authors"} allAuthors={authorsResult.data?.allAuthors} />
-        <Books show={page === "books"} allBooks={booksResult.data?.allBooks} />
+        <Books show={page === "books"} allBooks={booksResult.data?.allBooks} selectedGenre={''}/>
         <LoginForm setToken={setToken} show={page === "login"} />
       </div>
     );
