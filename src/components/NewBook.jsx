@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { gql, useMutation, useQuery, ApolloError } from '@apollo/client'
 import { CREATE_AUTHOR } from '../queries'
-
+import { updateCache } from '../App'
 
 const CREATE_BOOK = gql`
   mutation createBook($title: String!, $author: String!, $published: Int!, $genres: [String!]!) {
@@ -51,7 +51,14 @@ const NewBook = (props) => {
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
   const [createBook] = useMutation(CREATE_BOOK, {
+    update: (cache, response) => {
+      console.log('response:', response)
+      updateCache(cache, { query: ALL_BOOKS }, response.data.addBook)
+    },
     refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }]
+    // update: (cache, response) => {
+    //   updateCache(cache, {query: ALL_BOOKS}, response.data.addBook)
+    // }
   })
   const [createAuthor] = useMutation(CREATE_AUTHOR)
   const { data } = useQuery(ALL_AUTHORS)

@@ -7,6 +7,7 @@ const Books = ({show, selectedGenre}) => {
   const result = useQuery(ALL_BOOKS_WITH_GENRE, {
     variables: { genre }
   })
+  const { refetch } = result
 
   if (!show) {
     return null
@@ -33,8 +34,8 @@ const Books = ({show, selectedGenre}) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {books.filter((a) => genre === '' || a.genres.includes(genre)).map((a) => (
-            <tr key={a.title}>
+          {books.filter((a) => genre === '' || a.genres.includes(genre)).map((a, index) => (
+            <tr key={index}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
               <td>{a.published}</td>
@@ -47,7 +48,10 @@ const Books = ({show, selectedGenre}) => {
           {a}
         </button>
       ))}
-      <button onClick={() => setGenre('')}>all genres</button>
+      <button onClick={() => {
+        setGenre('')
+        refetch()
+      }}>all genres</button>
     </div>
   )
 }
