@@ -70,6 +70,7 @@ const Authors = ({show, allAuthors}) => {
         <h2>Set birthyear</h2>
         <form onSubmit={submit}>
           <select onChange={({ target }) => setName(target.value)}>
+          <option value="">Select an author</option>
             {authors.map((a) => (
               <option key={a.name} value={a.name} >{a.name}</option>
             ))}

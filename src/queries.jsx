@@ -45,3 +45,11 @@ export const BOOK_ADDED = gql`
     }
     }
     `;
+export const ALL_AUTHORS_WITH_BOOKCOUNT = gql`
+    query {
+        allAuthors {
+        name
+        bookCount
+        }
+    }
+    `;
